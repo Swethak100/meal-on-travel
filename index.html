@@ -115,11 +115,11 @@ form.login input[type="submit"]:hover {
 	$(window).on("hashchange", function () {
 	if (location.hash.slice(1) == "signup") {
 		$(".page").addClass("extend");
-		$("#login").removeClass("active");
+		$("#index").removeClass("active");
 		$("#signup").addClass("active");
 	} else {
 		$(".page").removeClass("extend");
-		$("#login").addClass("active");
+		$("#index").addClass("active");
 		$("#signup").removeClass("active");
 	}
 });
