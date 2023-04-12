@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+  
+    body {
+      background-color: #8e8383;
+    }
+  
+    form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 50%;
+     
+      margin: auto;
+    }
+  
+    h1{
+      text-align: center;
+  margin-top: 0;
+    }
+  
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 200%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 4px;
+      background-color: #f1f1f1;
+    }
+  
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      background-color: #ffffff;
+      border: 2px solid #555;
+    }
+  
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: #ffffff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+  
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+    }
+  
+    .col-50 {
+      width: 50%;
+      padding: 0 10px;
+    }
+  
+    /* Style the icons */
+    .fa {
+      margin-right: 5px;
+    }
+  
+  </style>
+</head>
+<body>
+   <h1>Sign Up</h1>
+  <form onsubmit="submitOrder(event)">
+    <div class="row">
+      <div class="col-50">
+        
+        <label for="fname"><i class="fa fa-user"></i> Name</label>
+        <input
+          type="text"
+          id="uname"
+          name="firstname"
+          
+        /><br /><br />
+        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+         
+        /><br /><br />
+
+        <label for="mob"><i class="fa fa-phone-o"></i> Mobile Number </label>
+        <input
+          type="text"
+          id="mobile"
+          name="phone"
+         
+        /><br><br>
+        <label for="pass"><i class="fa fa-phone-o"></i> Password</label>
+        <input
+          type="password"
+          id="password"
+          name="phone"
+         
+        /><br><br>
+        <label for="cpass"><i class="fa fa-phone-o"></i> Confirm Password</label>
+        <input
+          type="password"
+          id="cpassword"
+          name="phone"
+         
+        /><br><br>
+      </div>
+    </div>
+    <button type="submit">Register</button>
+ </form>
+<script>
+  const submitOrder = (event) => {
+    event.preventDefault();
+    const name = document.getElementById('uname').value;
+    const email = document.getElementById('email').value;
+    const mobile = document.getElementById('mobile').value;
+    const password= document.getElementById('password').value;
+    const conpassword= document.getElementById('cpassword').value;
+  
+    const databaseURL = 'https://meal-89fd5-default-rtdb.asia-southeast1.firebasedatabase.app/users.json';
+    const requestData = {
+      name,
+      email,
+      mobile,password,conpassword
+     
+    };
+  
+    fetch(databaseURL, {
+      method: 'POST',
+      body: JSON.stringify(requestData)
+    })
+    .then(response => {
+      if (response.ok) {
+        window.location.href = "login.html"; 
+        alert('User has been registered');
+      } else {
+        throw new Error('Something went wrong');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert('There was an error processing your request. Please try again later.');
+    });
+  };
+  
+</script>
+</body>
+</html>

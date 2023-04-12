@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      function calculateTotal() {
+        // get the input values
+        const vada = parseInt(document.getElementById("vada").value);
+        const idly = parseInt(document.getElementById("idly").value);
+        const dosa = parseInt(document.getElementById("dosa").value);
+        const meals = parseInt(document.getElementById("meals").value);
+        const veg_bri = parseInt(document.getElementById("veg_bri").value);
+        const mutton_bri = parseInt(
+          document.getElementById("mutton_bri").value
+        );
+        const chicken_bri = parseInt(
+          document.getElementById("chicken_bri").value
+        );
+        const egg_bri = parseInt(document.getElementById("egg_bri").value);
+        const tandoori = parseInt(document.getElementById("tandoori").value);
+        const panneer = parseInt(document.getElementById("panneer").value);
+
+        // calculate the total
+        const total =
+          vada * 290 +
+          idly * 180 +
+          dosa * 145 +
+          meals * 170 +
+          veg_bri * 150 +
+          mutton_bri * 115 +
+          chicken_bri * 120 +
+          egg_bri * 210 +
+          tandoori * 120 +
+          panneer * 75;
+
+          if (total === 0) {
+            const snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = "Please add items to your cart";
+    snackbar.className = "show";
+    setTimeout(function() { snackbar.className = snackbar.className.replace("show", ""); }, 9000);
+    } else {
+      document.getElementById("total").innerHTML = "Total: Rs." + total;
+      window.location.href = "pay.html?total=" + total;
+    }
+      }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #bbe8f0;
+        }
+        
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        
+        #menu {
+            background-color: #e4f4fb;
+            border: 1px solid #1f4fef;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .item {
+            margin-bottom: 20px;
+        }
+        
+        p {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        
+        input[type="number"] {
+            width: 60px;
+            height: 30px;
+            font-size: 16px;
+            margin-left: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+        }
+        
+        button {
+            background-color: #21c926;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #1bc213;
+        }
+        
+        #total {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+    </style>
+  </head>
+  <body>
+    <h2>Menu</h2>
+    <div id="menu">
+      <div class="item">
+        <p>Crispy fried wings &#127843- Rs.290</p>
+        <input type="number" min="0" id="vada" value="0" style="width: 3em" />
+        <br />
+        <p>Fried Chicken &#127831- Rs.180</p>
+        <input type="number" min="0" id="idly" value="0" style="width: 3em" />
+        <br />
+        <p>Choco lava cake &#127856	- Rs.145</p>
+        <input type="number" min="0" id="dosa" value="0" style="width: 3em" />
+        <br />
+        <p>Red velvet lava cake &#127854- Rs.170</p>
+        <input type="number" min="0" id="meals" value="0" style="width: 3em" />
+        <br />
+        <p>Brownie with ice cream &#127848- Rs.150</p>
+        <input
+          type="number"
+          min="0"
+          id="veg_bri"
+          value="0"
+          style="width: 3em"
+        />
+        <br />
+        <p>French Fries &#127839	- Rs.115</p>
+        <input
+          type="number"
+          min="0"
+          id="mutton_bri"
+          value="0"
+          style="width: 3em"
+        />
+        <p>Cheesy fries &#127839- Rs.120</p>
+        <input
+          type="number"
+          min="0"
+          id="chicken_bri"
+          value="0"
+          style="width: 3em"
+        />
+        <p>Chicken Pizza &#127829 - Rs.210</p>
+        <input
+          type="number"
+          min="0"
+          id="egg_bri"
+          value="0"
+          style="width: 3em"
+        />
+        <p>Chicken Burger &#127828	- Rs.120</p>
+        <input
+          type="number"
+          min="0"
+          id="tandoori"
+          value="0"
+          style="width: 3em"
+        />
+        <p>Cococola &#127863- Rs.75</p>
+        <input
+          type="number"
+          min="0"
+          id="panneer"
+          value="0"
+          style="width: 3em"
+        />
+      </div>
+      <div id="snackbar"></div>
+      <button onclick="calculateTotal()">Proceed to payment</button>
+      <p id="total">Total: Rs.0</p>
+      <!-- <button id="place" onclick="location.href = 'pay.html';">Place Order</button> -->
+    </div>
+  </body>
+</html>

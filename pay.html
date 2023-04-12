@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="pay.css" rel="stylesheet" />
+    <title>Payment page</title>
+  </head>
+  <body>
+    <div id="tot">
+      <p id="total-amount"></p>
+    </div>
+   
+    <div id="first">
+      <form>
+        
+          <h2 style="margin-left: 40px">Payment Options</h2>
+
+          <label id="one">
+            <input type="radio" name="payment" value="cash" />
+            Cash on Delivery </label
+          ><br />
+          <label id="two">
+            <input type="radio" name="payment" value="online" />
+            Online Payment </label
+          ><br />
+      
+      </form>
+    </div>
+<div id="cash">
+      <form onsubmit="submitOrder(event)">
+       
+            <h3>Billing Address</h3>
+            <label for="fname"><i class="fa fa-user"></i> Name</label>
+            <input
+              type="text"
+              id="name"
+              name="firstname"
+             
+            /><br /><br />
+            <label for="email"><i class="fa fa-envelope"></i> Bus number and Seat number </label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+            /><br /><br />
+
+            <label for="ph"><i class="fa fa-phone-o"></i> Phone number</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+            
+            />
+           <button type="submit" onclick="myFunction()" >Pay through cash</button>
+           <div id="snackbar">Your order has been placed</div>
+      </form>
+</div>
+
+<div id="card-details">
+            <form onsubmit="submitOrder(event)">
+            <h3>Payment</h3>
+
+            <label for="cname">Name on Card</label>
+            <input
+              type="text"
+              id="cname"
+              name="cardname"
+            
+            /><br /><br />
+            <label for="ccnum">Card number</label>
+            <input
+              type="text"
+              id="cnum"
+              name="cardnumber"
+             
+            /><br /><br />
+            <label for="expmonth">Expiry Month</label>
+            <input
+              type="text"
+              id="emon"
+              name="expmonth"
+           
+            /><br /><br />
+
+                <label for="expyear">Expiry Year</label>
+                <input
+                  type="text"
+                  id="eyear"
+                  name="expyear"
+                 
+                /><br /><br />
+           
+                <label for="cvv">CVV</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                
+                /><br /><br />
+        
+        
+        <button type="submit" onclick="myFunction()">Place Order</button>
+        <div id="snackbar">Your order has been placed</div>
+      </form>
+         
+ </div>
+
+    
+ <script src="pay.js"></script>
+ <script>
+    const paymentOptions = document.getElementsByName("payment");
+  const cardDetails = document.getElementById("card-details");
+  const cash = document.getElementById("cash");
+
+  // listen for changes to the payment options
+  for (let i = 0; i < paymentOptions.length; i++) {
+    paymentOptions[i].addEventListener("change", function () {
+      // show card details section only if online payment is selected
+      if (paymentOptions[i].value === "online") {
+        cardDetails.style.display = "block";
+      } else {
+        cash.style.display = "block";
+      }
+    });
+  }
+ </script>
+  </body>
+</html>
