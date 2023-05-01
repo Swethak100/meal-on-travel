@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MealOnTravel</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <link href="home.css" rel="stylesheet" />
+  </head>
+  <body>
+    <br /><br />
+    <span>MealOnTravel</span><br /><br /><br />
+    <section>
+      <code style="font-size: 15px; color: aliceblue">
+        <b>S</b>can the QR code which is embedded in <br />
+        bus ticket so that you can navigate to <br />
+        home through the browser in mobile and<br />
+        able to see the MealOnTravel website
+      </code>
+    </section>
+    <section>
+      <code style="font-size: 15px; color: aliceblue">
+        <b>E</b>nter the two locations between your<br />
+        source and destination , so that <br />
+        the hotels located between those places<br />
+        are listed out along with a map
+      </code>
+    </section>
+    <section>
+      <code style="font-size: 15px; color: aliceblue">
+        <b>C</b>lick the hotel that you want to<br />
+        get food from , add your desired items<br />
+        into the cart . Place the order and<br />
+        proceed to payment
+      </code>
+    </section>
+    <br /><br />
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="food1.jpg" style="width: 100%" />
+        <div class="text">Just Scan the QR code</div>
+      </div>
+
+      <div class="mySlides fade">
+        <img src="food2.jpg" style="width: 100%" />
+        <div class="text">Get your food quicker</div>
+      </div>
+
+      <div class="mySlides fade">
+        <img src="food3.jpg" style="width: 100%" />
+        <div class="text">Enjoy the snacks</div>
+      </div>
+
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
+    </div>
+    <br />
+
+    <div style="text-align: center">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+    <br /><br /><br />
+    <form id="myForm">
+      <label for="location1">Source:</label><br />
+      <input type="text" id="location1" />
+      <br />
+      <label for="location2">Destination: </label><br />
+      <input type="text" id="location2" />
+      <br />
+      <button type="button" class="button-62" onclick="validate()">
+        Search
+      </button>
+    </form>
+    <!-- <div class="rep"> -->
+      <!-- <span class="mobile"> -->
+        <div id="map"></div>
+      <!-- </span> -->
+    <!-- </div> -->
+    <div id="image-list"></div>
+    <script>
+      function showMap() {
+        // Create a new map
+        mapboxgl.accessToken =
+          "pk.eyJ1Ijoic3dldGhhazEwMDIiLCJhIjoiY2xmZTdjbmg5MGpxMDN6bnprMWw2YXVyeiJ9.c0lPcmCMLbeHetWR6f7TTA";
+        var map = new mapboxgl.Map({
+          container: "map",
+          style: "mapbox://styles/mapbox/streets-v11",
+        });
+
+        var location1 = document.getElementById("location1").value;
+        var location2 = document.getElementById("location2").value;
+
+        // Use Mapbox Geocoding API to get the coordinates of the locations
+        var geocodingUrl =
+          "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+          location1 +
+          ".json?access_token=" +
+          mapboxgl.accessToken;
+        fetch(geocodingUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            var location1Coords = data.features[0].center;
+            // Center the map on location 1
+            map.setCenter(location1Coords);
+            // Add a marker for location 1
+            new mapboxgl.Marker().setLngLat(location1Coords).addTo(map);
+
+            geocodingUrl =
+              "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+              location2 +
+              ".json?access_token=" +
+              mapboxgl.accessToken;
+            fetch(geocodingUrl)
+              .then((response) => response.json())
+              .then((data) => {
+                var location2Coords = data.features[0].center;
+                // Add a marker for location 2
+                new mapboxgl.Marker().setLngLat(location2Coords).addTo(map);
+
+                // Zoom and pan the map to show both markers
+                var bounds = new mapboxgl.LngLatBounds();
+                bounds.extend(location1Coords);
+                bounds.extend(location2Coords);
+                map.fitBounds(bounds);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      let slideIndex = 1;
+      showSlides(slideIndex);
+
+      function plusSlides(n) {
+        showSlides((slideIndex += n));
+      }
+
+      function currentSlide(n) {
+        showSlides((slideIndex = n));
+      }
+
+      function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = slides.length;
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+      }
+      function validate() {
+        const location1 = document.getElementById("location1").value;
+        const location2 = document.getElementById("location2").value;
+
+        if (location1 === "" || location2 === "") {
+          alert("Please fill in all fields.");
+          return false;
+        } else if (location1 === "madurai" || location2 === "virudhunagar") {
+          showMap();
+          displayno();
+        } else if (location1 === "tirunelveli" || location2 === "tuticorin") {
+          showMap();
+          displaytt();
+        } else if (location1 === "chennai" || location2 === "kanchipuram") {
+          showMap();
+          displayck();
+        } else {
+          showMap();
+          displayImages();
+        }
+      }
+      function displayck() {
+        const images = [
+          { src: "cafe.png", href: "menu2.html" },
+          { src: "Dominos.png", href: "menu2.html" },
+          { src: "harris.png", href: "menu.html" },
+          { src: "kfc.png", href: "menu2.html" },
+
+          { src: "saravana.png", href: "menunil.html" },
+        ];
+
+        const imageList = document.getElementById("image-list");
+        imageList.innerHTML = "";
+
+        images.forEach((image) => {
+          const img = document.createElement("img");
+          img.src = image.src;
+          img.onclick = () => {
+            window.location.href = image.href;
+          };
+
+          imageList.appendChild(img);
+        });
+      }
+      function displaytt() {
+        const images = [
+          { src: "thaj.png", href: "menu1.html" },
+
+          { src: "aasife.png", href: "menu.html" },
+          { src: "anand.png", href: "menu.html" },
+          { src: "saravana.png", href: "menunil.html" },
+          { src: "vairamaligai.png", href: "menu.html" },
+        ];
+
+        const imageList = document.getElementById("image-list");
+        imageList.innerHTML = "";
+
+        images.forEach((image) => {
+          const img = document.createElement("img");
+          img.src = image.src;
+          img.onclick = () => {
+            window.location.href = image.href;
+          };
+
+          imageList.appendChild(img);
+        });
+      }
+      function displayno() {
+        const images = [
+          { src: "zhawarma.png", href: "menunil.html" },
+          { src: "thaj.png", href: "menu1.html" },
+          { src: "prince.png", href: "menu.html" },
+          { src: "aasife.png", href: "menu.html" },
+          { src: "anand.png", href: "menu.html" },
+        ];
+
+        const imageList = document.getElementById("image-list");
+        imageList.innerHTML = "";
+
+        images.forEach((image) => {
+          const img = document.createElement("img");
+          img.src = image.src;
+          img.onclick = () => {
+            window.location.href = image.href;
+          };
+
+          imageList.appendChild(img);
+        });
+      }
+      function displayImages() {
+        const images = [
+          { src: "thaj.png", href: "menu1.html" },
+          { src: "prince.png", href: "menu.html" },
+          { src: "aasife.png", href: "menu.html" },
+          { src: "anand.png", href: "menu.html" },
+          { src: "anjappar.png", href: "menu.html" },
+          { src: "arabian.png", href: "menu1.html" },
+          { src: "burma.png", href: "menu.html" },
+          { src: "cafe.png", href: "menu2.html" },
+          { src: "Dominos.png", href: "menu2.html" },
+          { src: "harris.png", href: "menu.html" },
+          { src: "kfc.png", href: "menu2.html" },
+          { src: "thaj.png", href: "menu1.html" },
+          { src: "saravana.png", href: "menunil.html" },
+          { src: "vairamaligai.png", href: "menu.html" },
+          { src: "zhawarma.png", href: "menunil.html" },
+        ];
+
+        const imageList = document.getElementById("image-list");
+        imageList.innerHTML = "";
+
+        images.forEach((image) => {
+          const img = document.createElement("img");
+          img.src = image.src;
+          img.onclick = () => {
+            window.location.href = image.href;
+          };
+
+          imageList.appendChild(img);
+        });
+      }
+    </script>
+  </body>
+</html>
